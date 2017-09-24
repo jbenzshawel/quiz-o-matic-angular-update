@@ -1,10 +1,10 @@
 export interface Quiz {
-    id: string,
+    id: number,
     name:string,
     description:string,
     typeId:number,
     type:string,
-    created:DateTimeFormat,
-    updated:DateTimeFormat,
+    created:object,
+    updated:object,
     attributes:object
 }

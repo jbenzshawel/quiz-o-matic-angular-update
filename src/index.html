@@ -22,7 +22,7 @@
 <body>
     <app-root>
       <!-- loading message -->
-      <div class="loading">
+      <div class="loading" *ngIf="!loaded">
         <img class="center" src="assets/img/pencil-loading.gif" alt="loading application" />
         <h2>Loading . . .</h2>
       </div> 
