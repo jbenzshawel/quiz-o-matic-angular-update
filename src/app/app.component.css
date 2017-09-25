@@ -44,9 +44,25 @@ header {
     border-bottom-color: #a9a9a9;
     border-bottom-color: rgba(255,255,255,.25);
   }
-  .masthead-nav > .active > a,
-  .masthead-nav > .active > a:hover,
-  .masthead-nav > .active > a:focus {
+  .masthead-nav > li > .active,
+  .masthead-nav > li > .active:hover,
+  .masthead-nav > li > .active:focus {
     color: #333;
     border-bottom-color: #333;
   }
+
+
+/* media queries */
+/* col-xs-12 */
+@media (max-width: 768px) {
+  header.main-header h1 {
+    float: none;
+    text-align: center;
+    width: 100%;
+  }  
+
+  nav {
+    width: 100%;
+    text-align: center;
+  }
+}
