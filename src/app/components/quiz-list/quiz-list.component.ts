@@ -8,8 +8,8 @@ import { DataService }       from '../../services/data.service';
   styleUrls: ['./quiz-list.component.css']
 })
 export class QuizListComponent implements OnInit {
-  id:string;
-  quizList:Quiz[];
+  id: string;
+  quizList: Quiz[];
 
   constructor(private _dataService: DataService) {}
 
@@ -21,6 +21,6 @@ export class QuizListComponent implements OnInit {
     this._dataService.getQuizes()
       .subscribe(quizes => {
         this.quizList = quizes;
-      }); // end subscribe callback
+      });
   }
 }

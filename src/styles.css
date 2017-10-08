@@ -3,6 +3,8 @@
  * Author: Addison B. 
  */ 
 
+ @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
   /* fonts */
   p, a, strong, ul, li, ol, div, label {
     font-family: 'Roboto', sans-serif;

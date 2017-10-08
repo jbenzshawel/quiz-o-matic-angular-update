@@ -5,7 +5,7 @@
             <h3>List Quizes</h3>
             <ul>
                 <li *ngFor="let quiz of quizList">
-                    <a [routerLink]="['/take-quiz', quiz.id]">{{ quiz.name }}</a>
+                    <a [routerLink]="['/quiz/take', quiz.id]">{{ quiz.name }}</a>
                     <p>{{ quiz.description }}</p>
                 </li>
             </ul>
