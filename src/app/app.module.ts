@@ -3,8 +3,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule }                from '@angular/core';
 import { HttpClientModule }        from '@angular/common/http';
 import { RouterModule, Routes }    from '@angular/router';
+import { FormsModule }             from '@angular/forms';
 import { MdButtonModule,
          MdDialogModule }          from '@angular/material';
+
 import { LoggerService }           from './services/logger.service';
 import { DataService }             from './services/data.service';
 
@@ -41,10 +43,11 @@ export class AppMaterialModule {}
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     AppMaterialModule,
     RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      appRoutes
+      //,{ enableTracing: true } // <-- debugging purposes only
     )
   ],
   declarations: [

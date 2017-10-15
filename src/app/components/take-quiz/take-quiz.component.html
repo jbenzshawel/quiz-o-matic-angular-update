@@ -1,1 +1,39 @@
-<button md-button (click)="openDialog()">Open dialog</button>
+<div class="row">
+    <a class="right" [routerLink]="['/quiz/list']">Back to Quiz List</a>
+    <div class="col-xs-12">
+        <p *ngIf="currentQuiz !== null">{{ currentQuiz.description }}</p>
+    </div>
+    <div class="col-sm-10 col-sm-offset-1 col-xs-12">
+        <form (ngSubmit)="submitQuiz($event); quizForm.reset()" #quizForm="ngForm" class="quizForm">
+            <div class="question-row" *ngIf="currentQuestion !== null">
+                <h3>{{ currentQuestion.title }}</h3>
+                <ul class="question-options">
+                    <li *ngFor="let answer of currentQuestion.answers;">
+                        <div class="radio"
+                            [class.activeOption]="activeOption[currentQuestion.id] == answer.identifier" 
+                                    (click)="activeOption[currentQuestion.id] = answer.identifier">
+                            <label>
+                                <!-- <img src="{{ answer.image }}" alt="{{ answer.identifier }}" />   -->
+                                <img src="//placehold.it/450X250" alt="{{ answer.identifier }}" />                                                                     
+                                <input type="radio" 
+                                       name="response_{{ currentQuestion.id }}" 
+                                       value="{{ answer.identifier }}"                                         
+                                       [(ngModel)]="model.response[currentQuestion.id]" 
+                                       [attr.required]="currentQuestion.answers[0].identifier == answer.identifier ? true : null" /> 
+                                {{ answer.identifier }}.) {{ answer.content }}
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </div> <!--/.question-row-->
+            <button type="submit" md-raised-button class="quizButton center" id="submitQuiz" 
+                *ngIf="currentQuestionNumber === totalNumberQuestions">
+                Submit
+            </button> 
+             <button type="button" md-raised-button class="quizButton center" id="nextquestion" 
+                 *ngIf="currentQuestionNumber < totalNumberQuestions" (click)="showNextQuestion()">
+                Next Question
+            </button> 
+        </form><!-- end #quizForm -->
+   </div><!--/.col-sm-10 .col-sm-offset-1 .col-xs-12-->
+</div>

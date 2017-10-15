@@ -38,7 +38,7 @@ export class DataService {
       return null;
     }
 
-    return this._http.get<Quiz>(`${this._baseUrl}/quizes/list/${quizId}`)
+    return this._http.get<Quiz>(`${this._baseUrl}/quizes/${quizId}`)
   }
 
   public getQuestions(quizId: string): Observable<Question[]> {
@@ -56,7 +56,7 @@ export class DataService {
       return null;
     }
     
-    let apiEndpoint:string = `${this._baseUrl}/answers/list`;
+    let apiEndpoint:string = `${this._baseUrl}/answers/list/${quizId}`;
     if (includeActive) { apiEndpoint = `${apiEndpoint}/true`; }
 
     return this._http.get<Answer[]>(apiEndpoint);
