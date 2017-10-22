@@ -120,64 +120,6 @@
    margin-top:-10px
  }
  
- /* Take Quiz Section */
- .question-options {
-   list-style-type: none;
-   padding-left: 15px;
-   margin-bottom: 15px;
- }
- 
- .question-options li {
-   margin: 0 0 10px 10px;
- }
- 
- .question-options label {
-   font-size: 18px;
-   font-weight: 300;
-   width: 100%
- }
- 
- .question-options input {
-   width: 100%;
- }
- 
- .question-options img {
-   margin: 10px auto;
-   display: block;
-   max-width: 400px;
- }
- 
- .question-options .radio {
-     padding: 20px;
- }
- 
- .question-options input[type="radio"] {
-     display:none;
- }
- 
- .quizForm {
-   margin-bottom:25px
- }
- 
- .activeOption {
-   border: 1px solid rgb(16,108,200);
-   border-radius: 15px;
- }
- 
- .question-row img {
-   max-width: 400px;
-   /*max-height: 300px;*/
- }
- 
- .results img {
-   margin: 15px auto;
-   display: block;
- }
- 
- /* Modals */
- #no-response-modal {
-   margin: 125px auto;
- }
  
  /* media queries */
  /* col-xs-12 */
@@ -210,24 +152,4 @@
    .home h3 {
        text-align: center;
    }
-   .question-options .radio {
-     padding: 10px;
-   }
- 
-   .question-options .radio label {
-     padding-left:0
-   }
- 
-   .question-options input[type="radio"] {
-     display:none;
-   }
- 
-   .question-options img, .results img {
-     max-width: 250px;
-   }
- 
-   .question-options li {
-     margin: 0 0 10px 0;
-   }
- 
  }

@@ -1,13 +1,16 @@
 import { Component, 
          OnInit,
          OnDestroy }              from '@angular/core';
-import { ActivatedRoute }         from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MdDialog }               from '@angular/material';
 import { MessageDialogComponent } from '../dialogs/message-dialog.component'; 
 import { Quiz }                   from '../../interfaces/quiz';
 import { Question }               from '../../interfaces/question';
 import { Answer }                 from '../../interfaces/answer';
 import { DataService }            from '../../services/data.service';
+import { QuizEngineService }      from '../../services/quiz-engine.service'
+import { Common }                 from '../../classes/common';
+import { QuizResult }             from '../../classes/quiz-result';
 
 @Component({
   selector: 'app-take-quiz',
@@ -25,8 +28,16 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
   activeOption: any;
   totalNumberQuestions: number;
   currentQuestionNumber: number;
+
+  private _common: Common; 
   
-  constructor(public dialog: MdDialog, private _dataService: DataService, private _activatedRoute: ActivatedRoute) { }
+  constructor(
+    public dialog: MdDialog, 
+    private _activatedRoute: ActivatedRoute, 
+    private _router: Router, 
+    private _dataService: DataService, 
+    private _quizEngine: QuizEngineService
+  ) { }
 
   ngOnInit() {  
     this.activeOption = {};
@@ -42,6 +53,7 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
     };
 
     this.currentQuestionNumber = 1;
+    this._common = new Common();
   }
 
   ngOnDestroy() {
@@ -60,8 +72,7 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
   }
 
   showNextQuestion():void {
-    let numberResponses:number = Object.keys(this.model.response).length;
-    if (numberResponses === this.currentQuestionNumber) {
+    if (this._validQuizResponse()) {
       this.currentQuestion = this.questions[this.currentQuestionNumber];
       this.currentQuestionNumber += 1;
       window.scrollTo(0, 0);
@@ -85,11 +96,31 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
     });
   }
 
+  submitQuiz(event: Event): void {
+    event.preventDefault();
+    if (this._validQuizResponse()) {
+      let responseCopy = JSON.stringify(this.model.response);
+      let parsedResponse: any = this._common.parseJsonObject(responseCopy);
+
+      let quizResult = new QuizResult();
+      quizResult.content = this._quizEngine.scoreTwoOption(this.currentQuiz, this.answers, this.questions, parsedResponse);  
+      //quizResult.imagePath = quizEngine.status ? this.currentQuiz.images.pass : this.currentQuiz.images.fail;
+      quizResult.title = `Results: ${this.currentQuiz.name}`;
+
+      window.sessionStorage.setItem(quizResult.storageKey.concat(this.id), JSON.stringify(quizResult));
+      
+      this._router.navigateByUrl(`/quiz/result/${this.id}`);
+    }
+  }
+
   private _setQuizData(quizId:string):void {
     this.id = quizId;
     
     this._dataService.getQuiz(quizId)
-      .subscribe(quiz => this.currentQuiz = quiz);
+      .subscribe(quiz => { 
+        quiz.attributes = this._common.parseJsonObject(quiz.attributes.toString());
+        this.currentQuiz = quiz
+      });
 
     this._dataService.getQuestions(quizId)
       .subscribe(questions => {
@@ -113,10 +144,17 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
             if (typeof(this.questions[index].answers) === "undefined") {
               this.questions[index].answers = [];
             }
-            
+
+            this.answers[i].attributes = this._common.parseJsonObject(this.answers[i].attributes.toString());
             this.questions[index].answers.push(this.answers[i]);
           }
       }
     }); // end for each question
+  }
+
+  private _validQuizResponse(): boolean {
+    let numberResponses:number = Object.keys(this.model.response).length;
+
+    return numberResponses === this.currentQuestionNumber;
   }
 }

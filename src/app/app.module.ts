@@ -9,6 +9,7 @@ import { MdButtonModule,
 
 import { LoggerService }           from './services/logger.service';
 import { DataService }             from './services/data.service';
+import { QuizEngineService }       from './services/quiz-engine.service';
 
 import { AppComponent }            from './app.component';
 import { MessageDialogComponent }  from './components/dialogs/message-dialog.component';
@@ -16,6 +17,7 @@ import { HomeComponent }           from './components/home/home.component';
 import { PageNotFoundComponent }   from './components/page-not-found/page-not-found.component';
 import { QuizListComponent }       from './components/quiz-list/quiz-list.component';
 import { TakeQuizComponent }       from './components/take-quiz/take-quiz.component';
+import { QuizResultComponent }     from './components/quiz-result/quiz-result.component';
 
 /////////////////////////////////////////////////////////////////////////
 /// App Routes
@@ -23,6 +25,7 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'quiz/list', component: QuizListComponent },
   { path: 'quiz/take/:id', component: TakeQuizComponent },
+  { path: 'quiz/result/:id', component: QuizResultComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -56,14 +59,16 @@ export class AppMaterialModule {}
     HomeComponent,
     PageNotFoundComponent,
     QuizListComponent,
-    TakeQuizComponent
+    TakeQuizComponent,
+    QuizResultComponent
   ],
   entryComponents: [
     MessageDialogComponent
   ],
   providers: [
     LoggerService,
-    DataService
+    DataService,
+    QuizEngineService
   ],
   bootstrap: [
     AppComponent
